@@ -2,7 +2,7 @@
 
 See also the original [Regexp::Trie in Perl](https://metacpan.org/pod/Regexp::Trie).
 
-Inspired by [https://github.com/gfx/ruby-regexp_trie](https://github.com/gfx/ruby-regexp_trie).
+Transform from [https://github.com/gfx/ruby-regexp_trie](https://github.com/gfx/ruby-regexp_trie).
 
 
 ## Installation

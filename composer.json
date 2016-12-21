@@ -1,0 +1,34 @@
+{
+  "name": "sters/regexp-trie",
+  "description": "Regexp::Trie in PHP",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "regexp",
+    "trie"
+  ],
+  "homepage": "https://github.com/sters/php-regexp-trie",
+  "authors": [
+    {
+      "name": "sters"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "RegexpTrie\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "RegexpTrie\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}

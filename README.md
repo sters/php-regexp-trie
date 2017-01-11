@@ -15,3 +15,17 @@ Install Plugin using composer.
 $ composer require "sters/regexp-trie:dev-master"
 ```
 
+## Usage
+
+```
+use RegexpTrie\RegexpTrie;
+
+
+$regexpTrie = RegexpTrie::union([
+    'foo',
+    'bar',
+    'baz',
+]);
+
+var_dump($regexpTrie->toRegexp()); // string(16) "/(?:foo|ba[rz])/"
+```

@@ -24,7 +24,7 @@ class RegexpTrie
                 $this->add($s);
             }
 
-            return;
+            return $this;
         }
 
         if (empty($str) || !is_string($str)) {
@@ -42,18 +42,18 @@ class RegexpTrie
             $head = &$head[$char];
         }
 
-        $head['end'] = true;
+        $head['end'] = false;
 
         return $this;
     }
 
-    public function build(array $entry = null, $recursive = false)
+    public function build(array $entry = null)
     {
         if (is_null($entry)) {
             $entry = $this->head;
         }
 
-        if (empty($entry)) {
+        if (empty($entry) || (count($entry) === 1 && isset($entry['end']))) {
             return null;
         }
 
@@ -64,13 +64,13 @@ class RegexpTrie
         foreach ($entry as $key => $value) {
             $qc = preg_quote($key, '/');
 
-            if (empty($value) || $key === 'end') {
+            if (empty($value)) {
                 $q = true;
                 continue;
             }
 
-            $recurse = $this->build($value, true);
-            if (empty($recurse)) {
+            $recurse = $this->build($value);
+            if (is_null($recurse)) {
                 $cc[] = $qc;
             } else {
                 $alt[] = $qc . $recurse;
@@ -82,24 +82,22 @@ class RegexpTrie
             $alt[] = count($cc) === 1 ? $cc[0] : ('[' . implode('', $cc) . ']');
         }
 
-        var_dump($alt);
         $result = count($alt) === 1 ? $alt[0] : ('(?:' . implode('|', $alt) . ')');
 
         if ($q) {
             if ($cconly) {
-                return $result;
+                $result = $result . '?';
             } else {
-                return '(?:' . $result . ')';
+                $result = '(?:' . $result . ')?';
             }
-        } else {
-            return $result;
-        }
-
-        if ($recursive === false) {
-            $result = '/' . $result . '/';
         }
 
         return $result;
+    }
+
+    public function toRegexp()
+    {
+        return '/' . $this->build() . '/';
     }
 }
 

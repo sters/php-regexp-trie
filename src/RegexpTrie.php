@@ -17,6 +17,32 @@ class RegexpTrie
         $this->add($strings);
     }
 
+    private function __nextchar($string, &$pointer){
+        if (!isset($string[$pointer])) {
+            return false;
+        }
+
+        $char = ord($string[$pointer]);
+        if ($char < 128) {
+            return $string[$pointer++];
+        }
+
+        if ($char < 224){
+            $bytes = 2;
+        } elseif ($char < 240) {
+            $bytes = 3;
+        } elseif ($char < 248) {
+            $bytes = 4;
+        } elseif ($char == 252) {
+            $bytes = 5;
+        } else {
+            $bytes = 6;
+        }
+        $str =  substr($string, $pointer, $bytes);
+        $pointer += $bytes;
+        return $str;
+    }
+
     public function add($str)
     {
         if (is_array($str)) {
@@ -32,9 +58,9 @@ class RegexpTrie
         }
 
         $head = &$this->head;
-        for ($i = 0, $m = mb_strlen($str); $i < $m; $i++) {
-            $char = $str[$i];
 
+        $pointer = 0;
+        while (($char = $this->__nextchar($str, $pointer)) !== false) {
             if (!isset($head[$char])) {
                 $head[$char] = [];
             }

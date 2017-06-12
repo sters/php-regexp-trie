@@ -94,4 +94,24 @@ class RegexpTrieTest extends TestCase
             $this->assertEquals('$str must be string.', $ex->getMessage());
         }
     }
+
+    public function testUnicodeCharacter1()
+    {
+        $regexpTrie = new RegexpTrie();
+        $regexpTrie->add('of 1918–19');
+        $regexpTrie->add('1918–19');
+        $regexpTrie->add('1918');
+        $regexpTrie->add('19');
+
+        $this->assertEquals('/(?:of 1918–19|19(?:18(?:–19)?)?)/', $regexpTrie->toRegexp());
+    }
+
+    public function testUnicodeCharacter2()
+    {
+        $regexpTrie = new RegexpTrie();
+        $regexpTrie->add('こんにちは');
+        $regexpTrie->add('こんばんは');
+
+        $this->assertEquals('/こん(?:にちは|ばんは)/', $regexpTrie->toRegexp());
+    }
 }

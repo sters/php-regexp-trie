@@ -1,6 +1,7 @@
 # Regexp::Trie in PHP
 
 [![CircleCI](https://circleci.com/gh/sters/php-regexp-trie.svg?style=svg)](https://circleci.com/gh/sters/php-regexp-trie)
+[![Packagist](https://img.shields.io/packagist/v/sters/regexp-trie.svg)](https://packagist.org/packages/sters/regexp-trie)
 
 See also the original [Regexp::Trie in Perl](https://metacpan.org/pod/Regexp::Trie).
 
